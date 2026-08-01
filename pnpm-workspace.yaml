@@ -1,0 +1,7 @@
+packages:
+  - "packages/*" # For shared libraries
+  - "apps/*" # For applications
+allowBuilds:
+  bcrypt: true
+  sharp: true
+  unrs-resolver: true
