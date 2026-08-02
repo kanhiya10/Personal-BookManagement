@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "packageManager": "pnpm@11.18.0",
   "scripts": {
     "dev": "pnpm --parallel --filter ./apps/* dev",
     "build": "pnpm --recursive --filter ./apps/* build",
