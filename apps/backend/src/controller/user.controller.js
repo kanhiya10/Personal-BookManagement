@@ -5,7 +5,6 @@ import { User } from "../models/user.model.js";
 import { registerSchema, loginSchema } from "@repo/shared";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
-import { OAuth2Client } from "google-auth-library";
 
 
 const generateAccessAndRefereshToken = async (userId) => {
