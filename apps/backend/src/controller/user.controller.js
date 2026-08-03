@@ -64,7 +64,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     const options = {
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
+        sameSite: "none",
     };
 
     return res
@@ -173,7 +173,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const options = {
         httpOnly: true,
         secure: true,
-        sameSite: 'none',
+        sameSite: "none",
     }
     console.log("login step:3");
 
