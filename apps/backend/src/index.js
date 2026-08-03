@@ -1,18 +1,23 @@
 import express from "express";
 import cors from "cors";
+import {app} from "./app.js";
+import dotenv from "dotenv";
+import connectDB from "../src/db/db.js";
 
-const app = express();
-app.use(cors());
+dotenv.config({ path: './.env' });
 
-app.get("/api/health", (_req, res) => {
-  const user = {
-    id: "1",
-    name: "John",
-    email: "john@example.com"
-  };
-  res.json({ status: "ok", user });
-});
 
-app.listen(4000, () => {
-  console.log("Backend running at http://localhost:4000");
-});
+connectDB()
+  .then(async () => {
+    // Start server
+    console.log("Connected to the database successfully");
+    app.listen(process.env.PORT || 4000, () => {
+      console.log(`Server is running on port ${process.env.PORT || 4000}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Failed to connect to the database", err);
+  });
+
+
+  

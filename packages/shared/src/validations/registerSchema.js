@@ -8,7 +8,15 @@ export const registerSchema = z
 
         email: z
             .email("Please enter a valid email"),
-
+        username: z
+            .string()
+            .trim()
+            .min(3, "Username must be at least 3 characters")
+            .max(20, "Username cannot exceed 20 characters")
+            .regex(
+                /^[a-zA-Z0-9_]+$/,
+                "Username can only contain letters, numbers, and underscores"
+            ),
         password: z
             .string()
             .min(8, "Password must be at least 8 characters")

@@ -8,9 +8,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
     loginSchema
 }
-from '../../../../../packages/shared/src/validations/loginSchema';
+from '@repo/shared';
 type LoginFormData = z.infer<typeof loginSchema>;
-
+import { loginUser } from "@/service/user"; 
+import { useAuth } from "@/context/AuthContext";
+import {useRouter} from "next/navigation";
 
 
 export default function AuthPage() {
@@ -18,6 +20,21 @@ export default function AuthPage() {
         resolver: zodResolver(loginSchema),
         mode: "onChange",
     });
+    const router = useRouter();
+    const {login}=useAuth();
+
+  const onSubmit = async (data: LoginFormData) => {
+  try {
+    const res = await loginUser(data);
+    console.log(res.data);
+    login(res.data.user);
+    router.replace("/");
+    console.log("Logged in!");
+  } catch (error) {
+    console.error(error);
+  }
+};
+    
 
   return (
       <div className="w-full max-w-md rounded-xl bg-white shadow-lg p-8">
@@ -29,7 +46,15 @@ export default function AuthPage() {
           Login to continue
         </p>
 
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            label="Username"
+            type="text"
+            placeholder="john_doe"
+            {...register("username")}
+            error={errors.username?.message}
+            helperText="Enter a valid username (3-20 characters, letters, numbers, underscores only)."
+          />
           <Input
             label="Email"
             type="email"
@@ -46,18 +71,6 @@ export default function AuthPage() {
             error={errors.password?.message}
             helperText="Must be at least 8 characters and include an uppercase letter, lowercase letter, number, and special character."
           />
-
-          <div>
-            <label className="block text-sm mb-2 font-medium">
-              Password
-            </label>
-
-            <input
-              type="password"
-              placeholder="********"
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
 
           <div className="flex justify-between items-center text-sm">
             <label className="flex items-center gap-2">
@@ -86,10 +99,6 @@ export default function AuthPage() {
           <span className="mx-3 text-gray-500 text-sm">OR</span>
           <div className="h-px flex-1 bg-gray-300" />
         </div>
-
-        <button className="w-full border rounded-lg py-3 font-medium hover:bg-gray-100 transition">
-          Continue with Google
-        </button>
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Don't have an account?{" "}

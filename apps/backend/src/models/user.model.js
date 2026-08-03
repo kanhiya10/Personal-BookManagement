@@ -25,18 +25,6 @@ const userSchema=new Schema(
         lowercase:true,
         index:true,
     },
-    authProvider: {
-    type: String,
-    enum: ['google', 'credentials'],
-    default: 'credentials',
-   },
-    avatar:{
-        type:String,// cloudinary url
-        required:true,  
-    },
-    coverImage:{
-            type:String,// cloudinary url
-    },
     password:{
         type:String,
         required:[true,'Password is required'],
@@ -47,13 +35,11 @@ const userSchema=new Schema(
 },{timestamps:true}
 )
 
-userSchema.pre("save",async function (next){
-    if(!this.isModified("password")) return next();
+userSchema.pre("save", async function () {
+    if (!this.isModified("password")) return;
 
-    this.password=await bcrypt.hash(this.password,10);//bcrypt encrypts the password
-    next();
-})
-
+    this.password = await bcrypt.hash(this.password, 10);
+});
 
 userSchema.methods.isPasswordCorrect=async function(password){
     return await bcrypt.compare(password,this.password);

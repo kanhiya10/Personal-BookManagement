@@ -8,8 +8,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
     registerSchema
 }
-from '@repo/shared';
+    from '@repo/shared';
 type RegisterFormData = z.infer<typeof registerSchema>;
+import {registerUser} from "@/service/user";
 
 
 export default function RegisterPage() {
@@ -18,9 +19,14 @@ export default function RegisterPage() {
         mode: "onChange",
     });
 
-    const onSubmit = (data: RegisterFormData) => {
-        console.log(data);
-    };
+ const onSubmit = async (data: RegisterFormData) => {
+  try {
+    const res = await registerUser(data);
+    console.log(res.data);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
     return (
         <div className="w-full max-w-md rounded-xl bg-white shadow-lg p-8">
@@ -40,6 +46,14 @@ export default function RegisterPage() {
                     {...register("fullName")}
                     error={errors.fullName?.message}
                     helperText="Must be at least 3 characters."
+                />
+                <Input
+                    label="Username"
+                    type="text"
+                    placeholder="john_doe"
+                    {...register("username")}
+                    error={errors.username?.message}
+                    helperText="Enter a valid username (3-20 characters, letters, numbers, underscores only)."
                 />
                 <Input
                     label="Email"
@@ -79,13 +93,6 @@ export default function RegisterPage() {
                 <span className="mx-3 text-sm text-gray-500">OR</span>
                 <div className="flex-1 border-t border-gray-300" />
             </div>
-
-            <button
-                type="button"
-                className="w-full rounded-lg border border-gray-300 py-3 font-medium hover:bg-gray-100 transition"
-            >
-                Continue with Google
-            </button>
 
             <p className="mt-6 text-center text-sm text-gray-600">
                 Already have an account?{" "}
