@@ -26,10 +26,8 @@ export default function AuthPage() {
   const onSubmit = async (data: LoginFormData) => {
   try {
     const res = await loginUser(data);
-    console.log(res.data);
     login(res.data.user);
     router.replace("/");
-    console.log("Logged in!");
   } catch (error) {
     console.error(error);
   }

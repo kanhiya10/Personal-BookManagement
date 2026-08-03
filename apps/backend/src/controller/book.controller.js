@@ -10,9 +10,9 @@ import mongoose from "mongoose";
 
 const addBook = async (req, res) => {
     try {
-        console.log("addBook step:1");
+        
         const result = bookSchema.safeParse(req.body);
-        console.log("addBook step:1.1", result);
+       
 
         if (!result.success) {
             return res.status(400).json({
@@ -24,7 +24,7 @@ const addBook = async (req, res) => {
         const { title, author, status, tags } = result.data;
 
         let coverImage = "";
-        console.log("req.file:", req.file);
+        
 
         if (req.file) {
             const coverImg = await UploadOnCloudinary(req.file.path, [
@@ -39,10 +39,10 @@ const addBook = async (req, res) => {
                 throw new ApiError(500, "Failed to upload cover image to Cloudinary");
             }
 
-            console.log("Cloudinary upload response:", coverImg);
+          
             coverImage = coverImg.url;
         }
-        console.log("addBook step:2", { title, author, status, tags, coverImage });
+       
 
         const book = await Book.create({
             title,

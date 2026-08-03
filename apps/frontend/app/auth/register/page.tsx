@@ -11,6 +11,7 @@ import {
     from '@repo/shared';
 type RegisterFormData = z.infer<typeof registerSchema>;
 import {registerUser} from "@/service/user";
+import { useRouter,redirect  } from "next/navigation";
 
 
 export default function RegisterPage() {
@@ -18,11 +19,12 @@ export default function RegisterPage() {
         resolver: zodResolver(registerSchema),
         mode: "onChange",
     });
+    const router=useRouter();
 
  const onSubmit = async (data: RegisterFormData) => {
   try {
     const res = await registerUser(data);
-    console.log(res.data);
+    router.replace("/");
   } catch (err) {
     console.error(err);
   }
@@ -99,6 +101,7 @@ export default function RegisterPage() {
                 <button
                     type="button"
                     className="text-blue-600 font-semibold hover:underline"
+                    onClick={()=>redirect("/auth/login")}
                 >
                     Login
                 </button>

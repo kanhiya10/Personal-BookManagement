@@ -25,8 +25,6 @@ const generateAccessAndRefereshToken = async (userId) => {
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
 
-    console.log("refreshAccessToken step:1");
-
     const incomingRefreshToken =
         req.cookies.refreshToken ||
         req.body.refreshToken;
@@ -34,20 +32,17 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     if (!incomingRefreshToken) {
         throw new ApiError(401, "Unauthorized request");
     }
-    console.log("refreshAccessToken step:2", incomingRefreshToken);
 
     const decodedToken = jwt.verify(
         incomingRefreshToken,
         process.env.REFRESH_TOKEN_SECRET
     );
-    console.log("refreshAccessToken step:3", decodedToken);
 
     const user = await User.findById(decodedToken._id);
 
     if (!user) {
         throw new ApiError(401, "Invalid refresh token");
     }
-    console.log("refreshAccessToken step:4", user);
 
     if (incomingRefreshToken !== user.refreshToken) {
         throw new ApiError(
@@ -85,8 +80,6 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
 
 const registerUser = asyncHandler(async (req, res) => {
-
-    console.log("Request Body:", req.body); // Log the request body for debugging
 
     const result = registerSchema.safeParse(req.body);
 
@@ -131,7 +124,6 @@ const registerUser = asyncHandler(async (req, res) => {
 })
 
 const loginUser = asyncHandler(async (req, res) => {
-    console.log("login step:1");
 
     const result = loginSchema.safeParse(req.body);
 
@@ -143,9 +135,6 @@ const loginUser = asyncHandler(async (req, res) => {
     }
 
     const { password, username, email } = result.data
-
-    console.log("login step:2");
-
 
     if (!username && !email) {
         throw new ApiError(400, "username or password is required");
@@ -175,7 +164,6 @@ const loginUser = asyncHandler(async (req, res) => {
         secure: true,
         sameSite: "none",
     }
-    console.log("login step:3");
 
     return res
         .status(200)

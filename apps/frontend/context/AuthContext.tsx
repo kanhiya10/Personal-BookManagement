@@ -25,7 +25,6 @@ export function AuthProvider({
    const fetchCurrentUser = async () => {
     try {
       const res = await getCurrentUser();
-      console.log(res);
 
       setUser(res.data.data);
     } catch (error) {

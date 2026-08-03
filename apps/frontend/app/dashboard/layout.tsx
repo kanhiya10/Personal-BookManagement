@@ -13,6 +13,9 @@ export default function ProtectedLayout({
   const router = useRouter();
 
   useEffect(() => {
+
+    console.log('loading state',loading);
+    console.log('user state', user);
     if (!loading && !user) {
       router.replace("/auth/login");
     }

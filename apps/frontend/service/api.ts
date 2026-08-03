@@ -30,9 +30,7 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        console.log("Refreshing access token...");
         await refreshAccessToken();
-        console.log('trying again')
 
         // Retry the original request
         return api(originalRequest);

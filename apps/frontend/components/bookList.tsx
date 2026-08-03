@@ -37,8 +37,6 @@ const BookList = ({ books }: Props) => {
         await updateBookStatus(id, status);
 
     };
-
-    console.log(books);
     if (books.length === 0) {
         return (
             <div className="rounded-2xl border border-dashed border-gray-300 bg-white py-16 text-center">
