@@ -27,7 +27,7 @@ export default function AuthPage() {
   try {
     const res = await loginUser(data);
     console.log(res);
-    login(res.data.user);
+    login(res.data.data.user);
     router.replace("/");
   } catch (error) {
     console.error(error);
