@@ -26,6 +26,7 @@ export default function AuthPage() {
   const onSubmit = async (data: LoginFormData) => {
   try {
     const res = await loginUser(data);
+    console.log(res);
     login(res.data.user);
     router.replace("/");
   } catch (error) {
