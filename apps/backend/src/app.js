@@ -7,7 +7,7 @@ const app=express();
 app.use(cookieParser());
 
 app.use(cors({
-    origin: ['https://bookmanagement-uylnfgs5o-kanhiya-s-projects.vercel.app'],
+    origin: ['https://bookmanagement-navy-chi.vercel.app'],
     credentials:true,
 }))
 
