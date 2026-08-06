@@ -12,7 +12,7 @@ from '@repo/shared';
 type LoginFormData = z.infer<typeof loginSchema>;
 import { loginUser } from "@/service/user"; 
 import { useAuth } from "@/context/AuthContext";
-import {useRouter} from "next/navigation";
+import {useRouter,redirect} from "next/navigation";
 
 
 export default function AuthPage() {
@@ -101,7 +101,8 @@ export default function AuthPage() {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Don't have an account?{" "}
-          <button className="text-blue-600 font-semibold hover:underline">
+          <button className="text-blue-600 font-semibold hover:underline"
+          onClick={()=>redirect("/auth/register")}>
             Sign Up
           </button>
         </p>
