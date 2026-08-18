@@ -37,6 +37,13 @@ export function AuthProvider({
   // 👇 Call it when the provider mounts
   useEffect(() => {
     fetchCurrentUser();
+    alert(
+        "👋 Welcome!\n\n" +
+        "This is a demo account. Use the credentials below to explore the application:\n\n" +
+        "Username: Kanhiya\n" +
+        "Email: kanhiyagandhi002@gmail.com\n" +
+        "Password: Kanhiya@10"
+    );
   }, []);
 
    const login = (user: UserType) => {

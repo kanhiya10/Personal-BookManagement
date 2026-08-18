@@ -22,7 +22,7 @@ const BookForm = ({ onSuccess, onCancel }: BookFormProps) => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors,isSubmitting },
     } = useForm<BookFormData>({
         resolver: zodResolver(createBookSchema),
     });
@@ -143,9 +143,10 @@ const BookForm = ({ onSuccess, onCancel }: BookFormProps) => {
 
                     <button
                         type="submit"
+                        disabled={isSubmitting}
                         className="rounded-lg bg-blue-600 px-5 py-2 text-white"
                     >
-                        Add Book
+                        {isSubmitting ? "Adding..." : "Add Book"}
                     </button>
                 </div>
             </form>
